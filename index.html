@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="css/rating.css">
+        <script src="//js.jotform.com/JotFormCustomWidget.min.js"></script>
+    </head>
+    <body>
+        <div class="c-rating"></div>
+        <script src="js/rating.js"></script>
+        <script type="text/javascript">
+            
+            // target element
+            var el = document.querySelector('.c-rating');
+
+            // current rating, or initial rating
+            var currentRating = 0;
+
+            // max rating, i.e. number of stars you want
+            var maxRating= 5;
+            // rating instance
+            var myRating = rating(el, currentRating, maxRating);
+            
+            //always subscribe to ready event and implement widget related code
+            //inside callback function , it is the best practice while developing widgets
+            JFCustomWidget.subscribe("ready", function(){
+                //subscribe to form submit event
+                JFCustomWidget.subscribe("submit", function(){
+                    var msg = {
+                        //you should valid attribute to data for JotForm
+                        //to be able to use youw widget as required
+                        valid: true,
+                        value: myRating.getRating()
+                    };
+                    // send value to JotForm
+                    JFCustomWidget.sendSubmit(msg);
+                });
+            });
+        </script>
+    </body>
+</html>
